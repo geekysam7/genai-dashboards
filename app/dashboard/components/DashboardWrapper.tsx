@@ -38,9 +38,36 @@ const DashboardWrapper = ({
   data: TDasboardDisplay;
   children: React.ReactNode;
 }) => {
-  console.log(data);
   return (
-    <DashboardContext.Provider value={data}>
+    <DashboardContext.Provider
+      value={{
+        values: [],
+        globalSentiment: {},
+        total: 0,
+        avgRating: 0,
+        mostInstalled: {},
+        leastInstalled: {},
+        trendingGenre: "",
+        leastTrendingGenre: "",
+        trendingCategory: "",
+        leastTrendingCategory: "",
+        mostReviewed: {},
+        leastReviewed: {},
+        bestAppSentiment: {},
+        worstAppSentiment: {},
+        popularContentRating: "",
+        totalAppWithNoReviews: 0,
+        categoryAggregation: [],
+        sentimentData: {
+          data: [],
+          overallSentiment: {
+            name: "",
+            value: 0,
+            fill: "",
+          },
+        },
+      }}
+    >
       <div className="flex-1 space-y-4 p-8 pt-6">{children}</div>
     </DashboardContext.Provider>
   );
