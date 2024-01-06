@@ -60,6 +60,13 @@ type TSentimentData = {
   overallSentiment: TSentiment;
 };
 
+type TGenreAggregation = {
+  [K: string]: {
+    genre: string;
+    count: number;
+  };
+};
+
 type TDasboardDisplay = {
   values: IDasbhboard[];
   globalSentiment: TSentimentCount;
@@ -80,12 +87,7 @@ type TDasboardDisplay = {
   totalAppWithNoReviews: number;
   categoryAggregation: TCategoryAggregation[];
   sentimentData: TSentimentData;
-  genreAggregation: {
-    [K: string]: {
-      genre: string;
-      count: number;
-    };
-  };
+  genreAggregation: TGenreAggregation;
 };
 
 export type {
@@ -98,4 +100,5 @@ export type {
   TCategoryAggregation,
   TSentimentCount,
   TSentimentData,
+  TGenreAggregation,
 };

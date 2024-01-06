@@ -1,64 +1,56 @@
 "use client";
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { useMemo } from "react";
+import _values from "lodash/values";
+import {
+  Bar,
+  BarChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
-const data = [
-  {
-    name: "Jan",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "Feb",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "Mar",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "Apr",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "May",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "Jun",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "Jul",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "Aug",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "Sep",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "Oct",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "Nov",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: "Dec",
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-];
+import { TGenreAggregation } from "@/types/app";
 
-const Overview = () => {
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: {
+  active: boolean;
+  payload: {
+    [K: string]: any;
+  };
+  label: string;
+}) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="rounded-md p-4 bg-white bg-opacity-90 text-sm">
+        <p>
+          <span>Genre</span> : <span className="font-medium">{label}</span>
+        </p>
+        <p>
+          <span>Count</span> :{" "}
+          <span className="font-medium">{payload[0].value}</span>
+        </p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+const Overview = ({ data }: { data: TGenreAggregation }) => {
+  const parsedData = useMemo(() => {
+    return _values(data);
+  }, [data]);
+
   return (
     <ResponsiveContainer width="100%" height={350}>
-      <BarChart data={data}>
+      <BarChart data={parsedData}>
         <XAxis
-          dataKey="name"
+          dataKey="genre"
           stroke="#888888"
           fontSize={12}
           tickLine={false}
@@ -69,10 +61,11 @@ const Overview = () => {
           fontSize={12}
           tickLine={false}
           axisLine={false}
-          tickFormatter={(value) => `$${value}`}
         />
+        {/* @ts-ignore */}
+        <Tooltip content={<CustomTooltip />} />
         <Bar
-          dataKey="total"
+          dataKey="count"
           fill="currentColor"
           radius={[4, 4, 0, 0]}
           className="fill-primary"

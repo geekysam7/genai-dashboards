@@ -111,7 +111,7 @@ const OverviewTab = () => {
             <CardTitle>Overview</CardTitle>
           </CardHeader>
           <CardContent className="pl-2">
-            <Overview />
+            <Overview data={genreAggregation} />
           </CardContent>
         </Card>
         <Card className="grid-cols-2 col-span-7 lg:col-span-3">
