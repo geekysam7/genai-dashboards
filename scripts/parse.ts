@@ -9,16 +9,13 @@ import fs from "fs";
 
 import { TAppInfo, TAppReviewInfo } from "../types/app";
 import { ITEM, VALUE_PARSER } from "../types/general";
-
-// TODO: Check why imports not working
-const SENTIMENTS = ["POSITIVE", "NEGATIVE", "NEUTRAL"] as const;
-
-const ACCEPTED_SENTIMENTS = new Set(SENTIMENTS);
-
-const APP_FREE_TYPE = "FREE";
-const APP_TYPES = [APP_FREE_TYPE, "PAID"] as const;
-const ACCEPTED_APP_TYPES = new Set(APP_TYPES);
-const FALLBACK = "-" as const;
+import { createDataChunks } from "./createDataChunks";
+import {
+  ACCEPTED_SENTIMENTS,
+  APP_FREE_TYPE,
+  ACCEPTED_APP_TYPES,
+  FALLBACK,
+} from "./constants";
 
 const APP_DETAIL_HEADERS = {
   APP: "app",
@@ -185,26 +182,93 @@ const evaluateWorksheets = <T, U extends { [K: string]: string }>(
       valueParser,
       definedHeaders
     );
-    fs.writeFile(writePath, JSON.stringify(jsonData), "utf8", (err) => {
-      if (err) throw err;
-      console.log(`${readPath} written successfully to ${writePath}`);
-    });
+    fs.writeFileSync(writePath, JSON.stringify(jsonData), "utf8");
+    return jsonData;
   } catch (error) {
     console.log("Error - ", error);
+    return [];
   }
 };
 
 // passing types here is not needed unless some value is returned from the function.
 // passing still for readability.
-evaluateWorksheets<TAppInfo, typeof APP_DETAIL_HEADERS>(
+const appData = evaluateWorksheets<TAppInfo, typeof APP_DETAIL_HEADERS>(
   "../resource/googleplaystore.xlsx",
   "../public/appData.json",
   APP_DETAIL_HEADERS,
   getParsedAppData
 );
-evaluateWorksheets<TAppReviewInfo, typeof APP_REVIEWS_HEADERS>(
+const reviewsData = evaluateWorksheets<
+  TAppReviewInfo,
+  typeof APP_REVIEWS_HEADERS
+>(
   "../resource/googleplaystore_user_reviews.xlsx",
   "../public/appReviews.json",
   APP_REVIEWS_HEADERS,
   getParsedAppReviews
 );
+
+const writeChunks = (path: string, data: any) => {
+  fs.writeFileSync(path, JSON.stringify(data), "utf8");
+};
+
+const {
+  values,
+  total,
+  globalSentiment,
+  sentimentData,
+  avgRating,
+  appsWithNoRating,
+  mostInstalled,
+  leastInstalled,
+  trendingGenre,
+  leastTrendingGenre,
+  genreAggregation,
+  trendingCategory,
+  leastTrendingCategory,
+  mostReviewed,
+  leastReviewed,
+  bestAppSentiment,
+  worstAppSentiment,
+  popularContentRating,
+  totalAppWithNoReviews,
+  categoryAggregation,
+  contentCategoryVsData,
+} = createDataChunks(appData, reviewsData);
+
+// parsed data with reviews and app data
+writeChunks("../public/values.json", {
+  values,
+  total,
+});
+
+// individual app data stats
+writeChunks("../public/individualAppStats.json", {
+  mostReviewed,
+  leastReviewed,
+  bestAppSentiment,
+  worstAppSentiment,
+  mostInstalled,
+  leastInstalled,
+});
+
+// aggregations
+writeChunks("../public/aggregations.json", {
+  sentimentData,
+  categoryAggregation,
+  contentCategoryVsData,
+  genreAggregation,
+});
+
+// small data sets
+writeChunks("../public/quickStats.json", {
+  avgRating,
+  appsWithNoRating,
+  trendingGenre,
+  leastTrendingGenre,
+  popularContentRating,
+  totalAppWithNoReviews,
+  globalSentiment,
+  trendingCategory,
+  leastTrendingCategory,
+});
