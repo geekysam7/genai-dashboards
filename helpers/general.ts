@@ -24,9 +24,12 @@ const dataFormatter = (value: number, fixed = true) => {
 
 const tickFormatter = (value: number) => dataFormatter(value);
 
+const formatInstallValue = (value: string) =>
+  parseInt(value.replaceAll(",", "").replace("+", ""));
+
 const parseInstallSize = (value: string) => {
-  const updatedValue = value.replaceAll(",", "").replace("+", "");
-  return dataFormatter(parseInt(updatedValue), false);
+  const updatedValue = formatInstallValue(value);
+  return dataFormatter(updatedValue, false);
 };
 
-export { dataFormatter, parseInstallSize, tickFormatter };
+export { dataFormatter, parseInstallSize, tickFormatter, formatInstallValue };

@@ -9,7 +9,7 @@ type TAppType = (typeof APP_TYPES)[number];
 type TAppInfo = {
   app: string;
   category: string | TFallback;
-  rating: number | TFallback;
+  rating: number;
   reviews: number;
   size: string;
   installs: string;
@@ -65,6 +65,7 @@ type TDasboardDisplay = {
   globalSentiment: TSentimentCount;
   total: number;
   avgRating: number;
+  appsWithNoRating: number;
   mostInstalled: IDasbhboard | {};
   leastInstalled: IDasbhboard | {};
   trendingGenre: string;
@@ -79,6 +80,12 @@ type TDasboardDisplay = {
   totalAppWithNoReviews: number;
   categoryAggregation: TCategoryAggregation[];
   sentimentData: TSentimentData;
+  genreAggregation: {
+    [K: string]: {
+      genre: string;
+      count: number;
+    };
+  };
 };
 
 export type {

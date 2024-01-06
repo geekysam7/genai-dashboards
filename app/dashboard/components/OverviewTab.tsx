@@ -11,8 +11,16 @@ import { DashboardContext } from "./DashboardWrapper";
 import SentimentChart from "@/components/charts/SentimentChart";
 
 const OverviewTab = () => {
-  const { categoryAggregation, total, totalAppWithNoReviews, sentimentData } =
-    useContext(DashboardContext);
+  const {
+    categoryAggregation,
+    total,
+    totalAppWithNoReviews,
+    sentimentData,
+    avgRating,
+    appsWithNoRating,
+    trendingGenre,
+    genreAggregation,
+  } = useContext(DashboardContext);
   return (
     <TabsContent value={TABS.OVERVIEW} className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -36,10 +44,13 @@ const OverviewTab = () => {
             <PersonIcon />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+2350</div>
-            <p className="text-xs text-muted-foreground">
-              +200.1% install increase from month
-            </p>
+            <div className="text-2xl font-bold">{trendingGenre}</div>
+            {genreAggregation[trendingGenre]?.count && (
+              <p className="text-xs text-muted-foreground">
+                there are a total of {genreAggregation[trendingGenre]?.count}{" "}
+                apps of this genre!
+              </p>
+            )}
           </CardContent>
         </Card>
         <Card>
@@ -70,7 +81,7 @@ const OverviewTab = () => {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Now</CardTitle>
+            <CardTitle className="text-sm font-medium">Avg Rating</CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -85,10 +96,12 @@ const OverviewTab = () => {
             </svg>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+573</div>
-            <p className="text-xs text-muted-foreground">
-              +201 since last hour
-            </p>
+            <div className="text-2xl font-bold">{avgRating}</div>
+            {appsWithNoRating && (
+              <p className="text-xs text-muted-foreground">
+                total {appsWithNoRating} apps have no ratings yet!
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -103,7 +116,7 @@ const OverviewTab = () => {
         </Card>
         <Card className="grid-cols-2 col-span-7 lg:col-span-3">
           <CardHeader>
-            <CardTitle>Global Sentiment</CardTitle>
+            <CardTitle>Global App Sentiment</CardTitle>
             <CardContent className="p-0 text-sm">
               Most Results - {sentimentData.overallSentiment.name}
             </CardContent>

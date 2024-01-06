@@ -8,6 +8,7 @@ export const DashboardContext = createContext<TDasboardDisplay>({
   globalSentiment: {},
   total: 0,
   avgRating: 0,
+  appsWithNoRating: 0,
   mostInstalled: {},
   leastInstalled: {},
   trendingGenre: "",
@@ -29,6 +30,7 @@ export const DashboardContext = createContext<TDasboardDisplay>({
       fill: "",
     },
   },
+  genreAggregation: {},
 });
 
 const DashboardWrapper = ({
