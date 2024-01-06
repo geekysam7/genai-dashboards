@@ -37,11 +37,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [appData, appReviewsData] = await Promise.all([
-    getAppData(),
-    getAppReviewsData(),
-  ]);
-  const parsedData = getParsedAppData(appData, appReviewsData);
+  // const [appData, appReviewsData] = await Promise.all([
+  //   getAppData(),
+  //   getAppReviewsData(),
+  // ]);
+  // const parsedData = getParsedAppData(appData, appReviewsData);
   return (
     <div className="flex flex-col">
       <div className="border-b">
@@ -53,7 +53,7 @@ export default async function RootLayout({
         </div>
       </div>
       <Suspense fallback={<div>Loading...</div>}>
-        <DashboardWrapper data={parsedData}>{children}</DashboardWrapper>
+        <DashboardWrapper>{children}</DashboardWrapper>
       </Suspense>
     </div>
   );

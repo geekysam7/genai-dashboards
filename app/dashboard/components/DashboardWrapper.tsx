@@ -32,10 +32,10 @@ export const DashboardContext = createContext<TDasboardDisplay>({
 });
 
 const DashboardWrapper = ({
-  data,
+  // data,
   children,
 }: {
-  data: TDasboardDisplay;
+  // data: TDasboardDisplay;
   children: React.ReactNode;
 }) => {
   return (
