@@ -47,7 +47,7 @@ const numberParserWithFallback = (value: string) => {
     return parseFloat(value);
   }
   // fallback should not be taken as parameter, we need consistent type system.
-  return FALLBACK;
+  return 0;
 };
 
 const getParsedAppData = (

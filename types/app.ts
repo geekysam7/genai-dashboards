@@ -46,9 +46,39 @@ interface IDasbhboard extends TAppInfo {
   appSentiment: TSentimentCount;
 }
 
+type TCategoryAggregation = {
+  mostInstalled: IDasbhboard;
+  reviews: number;
+  name: string;
+  installs: number;
+};
+
+type TSentiment = { name: string; value: number; fill: string };
+
+type TSentimentData = {
+  data: TSentiment[];
+  overallSentiment: TSentiment;
+};
+
 type TDasboardDisplay = {
   values: IDasbhboard[];
   globalSentiment: TSentimentCount;
+  total: number;
+  avgRating: number;
+  mostInstalled: IDasbhboard | {};
+  leastInstalled: IDasbhboard | {};
+  trendingGenre: string;
+  leastTrendingGenre: string;
+  trendingCategory: string;
+  leastTrendingCategory: string;
+  mostReviewed: IDasbhboard | {};
+  leastReviewed: IDasbhboard | {};
+  bestAppSentiment: IDasbhboard | {};
+  worstAppSentiment: IDasbhboard | {};
+  popularContentRating: string;
+  totalAppWithNoReviews: number;
+  categoryAggregation: TCategoryAggregation[];
+  sentimentData: TSentimentData;
 };
 
 export type {
@@ -58,4 +88,7 @@ export type {
   TAppInfo,
   IDasbhboard,
   TDasboardDisplay,
+  TCategoryAggregation,
+  TSentimentCount,
+  TSentimentData,
 };
