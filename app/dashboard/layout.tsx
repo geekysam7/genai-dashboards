@@ -9,7 +9,7 @@ const dev = process.env.NODE_ENV !== "production";
 
 export const server = dev
   ? "http://localhost:3001"
-  : "https://segwise-assignment.vercel.app";
+  : "https://segwise-assignment-sameer.vercel.app";
 
 const getAppData = async () => {
   try {
@@ -18,7 +18,7 @@ const getAppData = async () => {
     const appDataParsed = appData.json();
     return appDataParsed;
   } catch (error) {
-    return {};
+    return [];
   }
 };
 
@@ -28,7 +28,7 @@ const getAppReviewsData = async () => {
     const appDataParsed = appData.json();
     return appDataParsed;
   } catch (error) {
-    return {};
+    return [];
   }
 };
 
@@ -37,11 +37,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const [appData, appReviewsData] = await Promise.all([
-  //   getAppData(),
-  //   getAppReviewsData(),
-  // ]);
-  // const parsedData = getParsedAppData(appData, appReviewsData);
+  const [appData, appReviewsData] = await Promise.all([
+    getAppData(),
+    getAppReviewsData(),
+  ]);
+  const parsedData = getParsedAppData(appData, appReviewsData);
   return (
     <div className="flex flex-col">
       <div className="border-b">
@@ -53,7 +53,7 @@ export default async function RootLayout({
         </div>
       </div>
       <Suspense fallback={<div>Loading...</div>}>
-        <DashboardWrapper>{children}</DashboardWrapper>
+        <DashboardWrapper data={parsedData}>{children}</DashboardWrapper>
       </Suspense>
     </div>
   );

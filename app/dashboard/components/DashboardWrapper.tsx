@@ -32,42 +32,14 @@ export const DashboardContext = createContext<TDasboardDisplay>({
 });
 
 const DashboardWrapper = ({
-  // data,
+  data,
   children,
 }: {
-  // data: TDasboardDisplay;
+  data: TDasboardDisplay;
   children: React.ReactNode;
 }) => {
   return (
-    <DashboardContext.Provider
-      value={{
-        values: [],
-        globalSentiment: {},
-        total: 0,
-        avgRating: 0,
-        mostInstalled: {},
-        leastInstalled: {},
-        trendingGenre: "",
-        leastTrendingGenre: "",
-        trendingCategory: "",
-        leastTrendingCategory: "",
-        mostReviewed: {},
-        leastReviewed: {},
-        bestAppSentiment: {},
-        worstAppSentiment: {},
-        popularContentRating: "",
-        totalAppWithNoReviews: 0,
-        categoryAggregation: [],
-        sentimentData: {
-          data: [],
-          overallSentiment: {
-            name: "",
-            value: 0,
-            fill: "",
-          },
-        },
-      }}
-    >
+    <DashboardContext.Provider value={data}>
       <div className="flex-1 space-y-4 p-8 pt-6">{children}</div>
     </DashboardContext.Provider>
   );
