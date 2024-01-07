@@ -41,12 +41,13 @@ const DashboardPage = () => {
         className="space-y-4 w-full"
         onValueChange={handleValueChange}
       >
-        <TabsList className="w-full lg:w-auto overflow-x-scroll flex justify-start">
+        <TabsList className="w-full overflow-x-scroll flex justify-start sm:justify-between sm:w-[500px] items-stretch">
           {TAB_VIEW_ORDER.map((tab) => (
             <TabsTrigger
               value={TABS[tab]}
               key={tab}
               children={TABS_VS_VALUE_TO_DISPLAY[tab]}
+              className="w-full"
             />
           ))}
         </TabsList>
