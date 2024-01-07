@@ -12,6 +12,9 @@ All visualisations should be interactive with the possibility of changing filter
 
 > Added app name based interaction, for other interactions, I tried the free text search logic and indexed the data in elasticsearch. Based on that I tried prompts on chatGPT to create query payload for our defined types.
 
+
+> Added filter support at chart level for category chart.
+
 We should be able to visualise app data based on sentiment from the second file as well.
 
 > Done! we aggregate at two levels - global & app.
