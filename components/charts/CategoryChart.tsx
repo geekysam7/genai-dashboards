@@ -146,7 +146,7 @@ const CategoryAggregationChart = ({
 
   return (
     <>
-      <div className="p-4 flex gap-4">
+      <div className="p-4 flex flex-col gap-4 sm:flex-row">
         <AxisSelect
           data={xAxisData}
           onChange={handleXAxisChange}

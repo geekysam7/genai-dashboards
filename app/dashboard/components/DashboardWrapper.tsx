@@ -42,7 +42,7 @@ const DashboardWrapper = ({
 }) => {
   return (
     <DashboardContext.Provider value={data}>
-      <div className="flex-1 space-y-4 p-8 pt-6">{children}</div>
+      <div className="flex-1 space-y-4 p-8 px-2 sm:px-8 pt-6">{children}</div>
     </DashboardContext.Provider>
   );
 };

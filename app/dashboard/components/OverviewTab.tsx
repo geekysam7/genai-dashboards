@@ -138,8 +138,8 @@ const OverviewTab = () => {
           </CardContent>
         </Card>
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="grid-cols-4 col-span-7 lg:col-span-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 w-full">
+        <Card className="grid-cols-4 col-span-7 lg:col-span-3 overflow-x-scroll">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
               Most & Least Popular Data
