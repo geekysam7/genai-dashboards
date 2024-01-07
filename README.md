@@ -63,3 +63,9 @@ Tried to integrate next-auth, kept it as is for now, was working on free text ca
 - Structured it in components, constants, helpers based on usage. If needed at app level then at top level constants folder otherwise inside specific components.
 - scripts => contains parsing logic to extract data from xlsx files and create aggregation like how we can expect from elasticsearch.
 - Type safe helper functions and components.
+
+## Why choose NextJS?
+
+First of all I'm only familiar with NextJS and not remix yet, I've read about it but not built apps with it.
+
+Also I'm using shadcn ui and tailwindcss which work out of the box with NextJS making it easy to get started. Using tailwind and typescript are available as options which configuring a new nextjs project itself, hence saving time from manual setup.
