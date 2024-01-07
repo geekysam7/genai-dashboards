@@ -38,7 +38,6 @@ const AppViewTab = () => {
     }
     return [];
   }, [value]);
-  console.log(value);
 
   useEffect(() => {
     const fetchData = async () => {

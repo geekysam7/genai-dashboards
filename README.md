@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# segwise.ai assignment
 
-## Getting Started
+Deployed at => https://segwise-assignment-sameer.vercel.app/
 
-First, run the development server:
+## Requirements
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Showcase your skills by demonstrating different kinds of charts, graphs and map visualisations:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Created various charts to visualize aggregated data from both the files.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+All visualisations should be interactive with the possibility of changing filters, dimensions or parameters on the x/y axis. Showcase variation apps based on categories, install, type etc.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+> Added app name based interaction, for other interactions, I tried the free text search logic and indexed the data in elasticsearch. Based on that I tried prompts on chatGPT to create query payload for our defined types.
 
-## Learn More
+We should be able to visualise app data based on sentiment from the second file as well.
 
-To learn more about Next.js, take a look at the following resources:
+> Done! we aggregate at two levels - global & app.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Also build a search functionality where a customer can search by any of the field values ie Type=Free. Search page should show paginated responses.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+> Due to time constraints this is not possible, but I've created scripts to ingest data in elasticsearch and possibility of using elasticsearch's ELSER offering.
+> Since this comes under paid pricing, could not integrate only this, for reference: https://www.elastic.co/guide/en/elasticsearch/reference/current/semantic-search-elser.html
 
-## Deploy on Vercel
+Apart from above major points:
+- Dashboard is responsive.
+- Insights are provided based on what apps are doing well in the market.
+- Used libraries such as nextjs, shadcn ui, tailwindcss, lodash, recharts, etc.
+- Parsing scripts to create data in chunks for various aggregation results, fully type safe.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Bonus Points
+
+### If you can support searching in normal english using a free generative AI api. For eg a query like this: how many apps have size > 10?
+
+> Checkout `SearchTab` component which includes free search capability. Due to time constrating I'm showing elasticsearch output as the result. Couldn't find any relevant free API to get back result, for completion and data flow purposes added the openAI example.
+
+For now only this query is working: how many apps have reviews > 10000.
+
+This is given as example, see screenshot to understand prompt getting used:
+
+for example:
+
+![Chat GPT prompt](./public/chatgpt-ss.png)
+
+here I'd earlier prompt of my typescript structure of data and how it was indexed in elasticsearch.
+
+### If you can integrate minimal auth, but also please provide demo credentials to log in
+
+Tried to integrate next-auth, kept it as is for now, was working on free text capability as priority.
+
+### If you can provide on what tech debt you might have taken on while working on this, and what steps you might have taken to resolve them if you had more time
+
+- Fix typescript `as Something` and `any` usage => This can be taken care of, due to time constraint left them at some places.
+- Common out charts => Charts should be common out so we can create something like Sentry dashboard to allow dynamic creation of charts. Each have separate api calls based on configurations saved, this helps in user customisation.
+- Cleanup constants getting copied due to module type differences in nodejs scripts & nextjs.
+- Do not directly use shadcn ui components => When we directly use components we may leak design system consistency, to ensure we have consistent design system, they should be wrapped in our own component and we should only expose props as required.
+- Better parsing scripts, current parsing scripts divide data in chunks to prevent huge in memory data on client. Later on I tried playing around with elasticsearch and got it working, but have not replaced filters with it.
+- Filtering support, with current implementation it's very easy to extend it, as aggregation is easily present and elasticsearch support is done, we can create dynamic filters and hit es query to get data.
