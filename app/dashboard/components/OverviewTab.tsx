@@ -45,7 +45,7 @@ const OverviewTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{trendingGenre}</div>
-            {genreAggregation[trendingGenre]?.count && (
+            {genreAggregation?.[trendingGenre]?.count && (
               <p className="text-xs text-muted-foreground">
                 there are a total of {genreAggregation[trendingGenre]?.count}{" "}
                 apps of this genre!
@@ -118,10 +118,10 @@ const OverviewTab = () => {
           <CardHeader>
             <CardTitle>Global App Sentiment</CardTitle>
             <CardContent className="p-0 text-sm">
-              Most Results - {sentimentData.overallSentiment.name}
+              Most Results - {sentimentData?.overallSentiment.name}
             </CardContent>
             <CardContent className="pl-2">
-              <SentimentChart data={sentimentData.data} />
+              <SentimentChart data={sentimentData?.data} />
             </CardContent>
           </CardHeader>
         </Card>
