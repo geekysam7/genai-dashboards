@@ -2,6 +2,7 @@
 
 import OpenAI from "openai";
 import { Client } from "@elastic/elasticsearch";
+import { IDasbhboard } from "@/types/app";
 
 const openai = new OpenAI({
   apiKey: "sk-3EpwvEK", // fake
@@ -92,4 +93,28 @@ const fetchQuery = async (userQuery: string) => {
     return {};
   }
 };
+
+const search = async (searchString: string) => {
+  try {
+    const searchResult = await client.search({
+      index: "search-category",
+      ...(searchString
+        ? {
+            query: {
+              query_string: {
+                default_field: "app",
+                query: searchString,
+              },
+            },
+          }
+        : {}),
+      size: 50,
+    });
+    return searchResult.hits.hits.map((data) => data._source) as IDasbhboard[];
+  } catch (error) {
+    return [];
+  }
+};
+
+export { search };
 export default fetchQuery;

@@ -8,7 +8,7 @@ const TABS = {
 // ideally separate to create i18n wrapped strings.
 const TABS_VS_VALUE_TO_DISPLAY = {
   [TABS.OVERVIEW]: "Overview",
-  [TABS.APP_VIEW]: "App View",
+  [TABS.APP_VIEW]: "View App Sentiment",
   [TABS.REPORTS]: "Reports",
   [TABS.SEARCH]: "Search",
 };

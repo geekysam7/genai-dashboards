@@ -194,7 +194,7 @@ const OverviewTab = () => {
           </CardContent>
         </Card>
         <div className="grid-cols-4 col-span-7 lg:grid-cols-none lg:col-span-1 flex flex-col">
-          <Card>
+          <Card className="h-full">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Most Popular Content Category
@@ -202,7 +202,9 @@ const OverviewTab = () => {
               <ChatBubbleIcon />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{popularContentRating}</div>
+              <div className="text-2xl font-bold pt-2">
+                {popularContentRating}
+              </div>
               {popularContentRating && (
                 <p className="text-xs text-muted-foreground">
                   is the content category with most apps
@@ -210,7 +212,7 @@ const OverviewTab = () => {
               )}
             </CardContent>
           </Card>
-          <Card className="mt-4">
+          <Card className="mt-4 h-full">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Least Trending Genre
@@ -218,7 +220,9 @@ const OverviewTab = () => {
               <PersonIcon />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{leastTrendingGenre}</div>
+              <div className="text-2xl font-bold pt-2">
+                {leastTrendingGenre}
+              </div>
               {genreAggregation?.[leastTrendingGenre]?.count && (
                 <p className="text-xs text-muted-foreground">
                   there are only a total of{" "}

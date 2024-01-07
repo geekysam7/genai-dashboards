@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { PieChart, Pie, ResponsiveContainer, Tooltip } from "recharts";
 import _keys from "lodash/keys";
 import _reduce from "lodash/reduce";
 
-import { TSentimentCount, TSentimentData } from "@/types/app";
+import { TSentimentData } from "@/types/app";
 
 const CustomTooltip = ({
   active,

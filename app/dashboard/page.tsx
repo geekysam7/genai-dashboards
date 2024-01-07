@@ -38,10 +38,10 @@ const DashboardPage = () => {
       </div>
       <Tabs
         defaultValue={TABS.OVERVIEW}
-        className="space-y-4"
+        className="space-y-4 w-full"
         onValueChange={handleValueChange}
       >
-        <TabsList>
+        <TabsList className="w-full lg:w-auto">
           {TAB_VIEW_ORDER.map((tab) => (
             <TabsTrigger
               value={TABS[tab]}

@@ -17,12 +17,6 @@ const MainNav = ({
       >
         Overview
       </Link>
-      <Link
-        href="/dashboard/settings"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Settings
-      </Link>
     </nav>
   );
 };
