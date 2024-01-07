@@ -56,3 +56,10 @@ Tried to integrate next-auth, kept it as is for now, was working on free text ca
 - Do not directly use shadcn ui components => When we directly use components we may leak design system consistency, to ensure we have consistent design system, they should be wrapped in our own component and we should only expose props as required.
 - Better parsing scripts, current parsing scripts divide data in chunks to prevent huge in memory data on client. Later on I tried playing around with elasticsearch and got it working, but have not replaced filters with it.
 - Filtering support, with current implementation it's very easy to extend it, as aggregation is easily present and elasticsearch support is done, we can create dynamic filters and hit es query to get data.
+
+## App Structure
+
+- Used latest app router from nextjs => Recommended way from nextjs team.
+- Structured it in components, constants, helpers based on usage. If needed at app level then at top level constants folder otherwise inside specific components.
+- scripts => contains parsing logic to extract data from xlsx files and create aggregation like how we can expect from elasticsearch.
+- Type safe helper functions and components.
