@@ -9,7 +9,7 @@ import DashboardWrapper from "./components/DashboardWrapper";
 const dev = process.env.NODE_ENV !== "production";
 
 export const server = dev
-  ? "http://localhost:3002"
+  ? "http://localhost:3001"
   : "https://segwise-assignment-sameer.vercel.app";
 
 const getAppData = async (path: string) => {
@@ -53,7 +53,7 @@ export default async function RootLayout({
           </div>
         </div>
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div className="p-4">Loading...</div>}>
         <DashboardWrapper data={parsedData}>{children}</DashboardWrapper>
       </Suspense>
     </div>

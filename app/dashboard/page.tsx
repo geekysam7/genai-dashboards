@@ -1,11 +1,12 @@
 "use client";
 import { useState } from "react";
-import Button from "@/components/Button";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import DateRangePicker from "@/components/DateRangePicker";
-import Search from "@/components/Search";
 import OverviewTab from "./components/OverviewTab";
+import ReportsTab from "./components/ReportsTab";
+import SearchTab from "./components/SearchTab";
+import AppViewTab from "./components/AppViewTab";
+
 import {
   TABS,
   TABS_VS_VALUE_TO_DISPLAY,
@@ -15,9 +16,9 @@ import {
 
 const TAB_TYPE_VS_TAB = {
   [TABS.OVERVIEW]: OverviewTab,
-  [TABS.CUSTOMIZE]: OverviewTab,
-  [TABS.REPORTS]: OverviewTab,
-  [TABS.NOTIFICATIONS]: OverviewTab,
+  [TABS.APP_VIEW]: AppViewTab,
+  [TABS.REPORTS]: ReportsTab,
+  [TABS.SEARCH]: SearchTab,
 };
 
 const DashboardPage = () => {
@@ -34,10 +35,6 @@ const DashboardPage = () => {
     <>
       <div className="flex flex-col md:flex-row items-center justify-between space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-        <div className="flex items-center space-x-2">
-          <DateRangePicker />
-          <Button>Download</Button>
-        </div>
       </div>
       <Tabs
         defaultValue={TABS.OVERVIEW}
@@ -53,7 +50,6 @@ const DashboardPage = () => {
             />
           ))}
         </TabsList>
-        <Search />
         <TabToRender />
       </Tabs>
     </>

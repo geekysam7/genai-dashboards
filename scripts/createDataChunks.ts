@@ -224,6 +224,34 @@ const createDataChunks = (
         result.totalAppWithNoReviews += 1;
       }
 
+      const parsedInstalls = formatInstallValue(installs);
+      if (parsedInstalls > mostInstalledCount) {
+        mostInstalledCount = parsedInstalls;
+        mostInstalled = appData;
+      }
+      if (parsedInstalls < leastInstalledCount) {
+        leastInstalledCount = parsedInstalls;
+        leastInstalled = appData;
+      }
+
+      if (reviews > mostReviewedCount) {
+        mostReviewedCount = reviews;
+        mostReviewed = appData;
+      }
+      if (reviews < leastReviewedCount) {
+        leastReviewedCount = reviews;
+        leastReviewed = appData;
+      }
+
+      if (appSentiment[SENTIMENT_TYPES.POSITIVE] > bestAppSentimentCount) {
+        bestAppSentimentCount = appSentiment[SENTIMENT_TYPES.POSITIVE];
+        bestAppSentiment = appData;
+      }
+      if (appSentiment[SENTIMENT_TYPES.NEGATIVE] < worstAppSentimentCount) {
+        worstAppSentimentCount = appSentiment[SENTIMENT_TYPES.NEGATIVE];
+        worstAppSentiment = appData;
+      }
+
       // genre calculation
       genres.forEach((genre: string) => {
         const count = result.genreAggregation[genre]
@@ -248,33 +276,6 @@ const createDataChunks = (
               }),
         };
       });
-
-      const parsedInstalls = formatInstallValue(installs);
-      if (parsedInstalls > mostInstalledCount) {
-        mostReviewedCount = parsedInstalls;
-        mostInstalled = appData;
-      } else if (leastInstalledCount < parsedInstalls) {
-        leastInstalledCount = parsedInstalls;
-        leastInstalled = appData;
-      }
-
-      if (reviews > mostReviewedCount) {
-        mostReviewedCount = reviews;
-        mostReviewed = appData;
-      } else if (reviews < leastReviewedCount) {
-        leastReviewedCount = reviews;
-        leastReviewed = appData;
-      }
-
-      if (appSentiment[SENTIMENT_TYPES.POSITIVE] > bestAppSentimentCount) {
-        bestAppSentimentCount = appSentiment[SENTIMENT_TYPES.POSITIVE];
-        bestAppSentiment = appData;
-      } else if (
-        appSentiment[SENTIMENT_TYPES.NEGATIVE] < worstAppSentimentCount
-      ) {
-        worstAppSentimentCount = appSentiment[SENTIMENT_TYPES.NEGATIVE];
-        worstAppSentiment = appData;
-      }
       return result;
     },
     {

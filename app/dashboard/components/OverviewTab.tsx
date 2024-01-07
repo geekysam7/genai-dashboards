@@ -1,14 +1,31 @@
 import { useContext } from "react";
-import { GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
+import {
+  GlobeIcon,
+  PersonIcon,
+  EyeNoneIcon,
+  Pencil2Icon,
+  ChatBubbleIcon,
+  BarChartIcon,
+} from "@radix-ui/react-icons";
+import _isEmpty from "lodash/isEmpty";
 
 import Card, { CardContent, CardHeader, CardTitle } from "@/components/Card";
-import Overview from "@/components/Overview";
+import Overview from "@/components/charts/OverviewChart";
 import { TabsContent } from "@/components/ui/tabs";
-import CategoryAggregationChart from "@/components/charts/BarChart";
+import CategoryAggregationChart from "@/components/charts/CategoryChart";
+import SentimentChart from "@/components/charts/SentimentChart";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+} from "@/components/Table";
 
 import { TABS } from "../constants/general";
 import { DashboardContext } from "./DashboardWrapper";
-import SentimentChart from "@/components/charts/SentimentChart";
 
 const OverviewTab = () => {
   const {
@@ -19,7 +36,17 @@ const OverviewTab = () => {
     avgRating,
     appsWithNoRating,
     trendingGenre,
+    leastTrendingGenre,
     genreAggregation,
+    bestAppSentiment,
+    worstAppSentiment,
+    mostInstalled,
+    leastInstalled,
+    mostReviewed,
+    leastReviewed,
+    trendingCategory,
+    leastTrendingCategory,
+    popularContentRating,
   } = useContext(DashboardContext);
   return (
     <TabsContent value={TABS.OVERVIEW} className="space-y-4">
@@ -58,19 +85,7 @@ const OverviewTab = () => {
             <CardTitle className="text-sm font-medium">
               Total Apps with No Reviews
             </CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <rect width="20" height="14" x="2" y="5" rx="2" />
-              <path d="M2 10h20" />
-            </svg>
+            <EyeNoneIcon />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalAppWithNoReviews}</div>
@@ -82,18 +97,7 @@ const OverviewTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Avg Rating</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-            </svg>
+            <Pencil2Icon />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{avgRating}</div>
@@ -108,7 +112,7 @@ const OverviewTab = () => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
         <Card className="grid-cols-2 col-span-7 lg:col-span-4">
           <CardHeader>
-            <CardTitle>Overview</CardTitle>
+            <CardTitle>Genre Aggregation</CardTitle>
           </CardHeader>
           <CardContent className="pl-2">
             <Overview data={genreAggregation} />
@@ -127,12 +131,104 @@ const OverviewTab = () => {
         </Card>
         <Card className="col-span-7 grid-cols-2">
           <CardHeader>
-            <CardTitle>Category vs Reviews</CardTitle>
+            <CardTitle>Category Aggregation</CardTitle>
           </CardHeader>
           <CardContent className="pl-2">
             <CategoryAggregationChart data={categoryAggregation} />
           </CardContent>
         </Card>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card className="grid-cols-4 col-span-7 lg:col-span-3">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              Most & Least Popular Data
+            </CardTitle>
+            <BarChartIcon />
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableCaption>
+                A list of most and least popular data available from all apps.
+              </TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Category Type</TableHead>
+                  <TableHead>Most Popular</TableHead>
+                  <TableHead className="text-right">Least Popular</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium">App Sentiment</TableCell>
+                  <TableCell>{bestAppSentiment?.app}</TableCell>
+                  <TableCell className="text-right">
+                    {worstAppSentiment?.app}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Installations</TableCell>
+                  <TableCell>{mostInstalled?.app}</TableCell>
+                  <TableCell className="text-right">
+                    {leastInstalled?.app}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Reviewed</TableCell>
+                  <TableCell>{mostReviewed?.app}</TableCell>
+                  <TableCell className="text-right">
+                    {leastReviewed?.app}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">
+                    Trending Category
+                  </TableCell>
+                  <TableCell>{trendingCategory}</TableCell>
+                  <TableCell className="text-right">
+                    {leastTrendingCategory}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+        <div className="grid-cols-4 col-span-7 lg:grid-cols-none lg:col-span-1 flex flex-col">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Most Popular Content Category
+              </CardTitle>
+              <ChatBubbleIcon />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{popularContentRating}</div>
+              {popularContentRating && (
+                <p className="text-xs text-muted-foreground">
+                  is the content category with most apps
+                </p>
+              )}
+            </CardContent>
+          </Card>
+          <Card className="mt-4">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Least Trending Genre
+              </CardTitle>
+              <PersonIcon />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{leastTrendingGenre}</div>
+              {genreAggregation?.[leastTrendingGenre]?.count && (
+                <p className="text-xs text-muted-foreground">
+                  there are only a total of{" "}
+                  {genreAggregation[leastTrendingGenre].count} apps of this
+                  genre!
+                </p>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </TabsContent>
   );

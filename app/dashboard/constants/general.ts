@@ -1,23 +1,23 @@
 const TABS = {
   OVERVIEW: "OVERVIEW",
-  CUSTOMIZE: "CUSTOMIZE",
+  APP_VIEW: "APP_VIEW",
   REPORTS: "REPORTS",
-  NOTIFICATIONS: "NOTIFICATIONS",
+  SEARCH: "SEARCH",
 } as const;
 
 // ideally separate to create i18n wrapped strings.
 const TABS_VS_VALUE_TO_DISPLAY = {
   [TABS.OVERVIEW]: "Overview",
-  [TABS.CUSTOMIZE]: "Customize",
+  [TABS.APP_VIEW]: "App View",
   [TABS.REPORTS]: "Reports",
-  [TABS.NOTIFICATIONS]: "Notifications",
+  [TABS.SEARCH]: "Search",
 };
 
 const TAB_VIEW_ORDER = [
   TABS.OVERVIEW,
-  TABS.CUSTOMIZE,
+  TABS.APP_VIEW,
   TABS.REPORTS,
-  TABS.NOTIFICATIONS,
+  TABS.SEARCH,
 ];
 
 type TTabs = keyof typeof TABS;

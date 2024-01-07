@@ -1,7 +1,7 @@
 "use client";
 import { createContext } from "react";
 
-import { TDasboardDisplay } from "@/types/app";
+import { IDasbhboard, TDasboardDisplay } from "@/types/app";
 
 export const DashboardContext = createContext<TDasboardDisplay>({
   values: [],
@@ -9,16 +9,16 @@ export const DashboardContext = createContext<TDasboardDisplay>({
   total: 0,
   avgRating: 0,
   appsWithNoRating: 0,
-  mostInstalled: {},
-  leastInstalled: {},
+  mostInstalled: {} as IDasbhboard,
+  leastInstalled: {} as IDasbhboard,
   trendingGenre: "",
   leastTrendingGenre: "",
   trendingCategory: "",
   leastTrendingCategory: "",
-  mostReviewed: {},
-  leastReviewed: {},
-  bestAppSentiment: {},
-  worstAppSentiment: {},
+  mostReviewed: {} as IDasbhboard,
+  leastReviewed: {} as IDasbhboard,
+  bestAppSentiment: {} as IDasbhboard,
+  worstAppSentiment: {} as IDasbhboard,
   popularContentRating: "",
   totalAppWithNoReviews: 0,
   categoryAggregation: [],

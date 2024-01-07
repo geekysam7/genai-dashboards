@@ -1,12 +1,19 @@
 import { Input } from "./ui/input";
 
-const Search = () => {
+const Search = ({
+  onChange,
+  className,
+}: {
+  onChange: any;
+  className: string;
+}) => {
   return (
-    <div>
+    <div className={className}>
       <Input
         type="search"
-        placeholder="Search..."
-        className="md:w-[100px] lg:w-[300px]"
+        placeholder="How many apps have reviews greater than 100000?"
+        className="w-full"
+        onChange={onChange}
       />
     </div>
   );
