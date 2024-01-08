@@ -324,7 +324,7 @@ const createDataChunks = (
     popularContentRating,
     totalAppWithNoReviews,
     categoryAggregation,
-    contentCategoryVsData,
+    contentCategoryVsData: {},
   };
 };
 
