@@ -303,7 +303,8 @@ const createDataChunks = (
   }
 
   return {
-    values: appDataWithReviews,
+    // values: appDataWithReviews,
+    values: [],
     total: appDataWithReviews.length,
     globalSentiment,
     sentimentData: getSentimentData(globalSentiment),
