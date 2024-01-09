@@ -3,7 +3,6 @@ import { useState } from "react";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import OverviewTab from "./components/OverviewTab";
-import ReportsTab from "./components/ReportsTab";
 import SearchTab from "./components/SearchTab";
 import AppViewTab from "./components/AppViewTab";
 
@@ -17,7 +16,6 @@ import {
 const TAB_TYPE_VS_TAB = {
   [TABS.OVERVIEW]: OverviewTab,
   [TABS.APP_VIEW]: AppViewTab,
-  [TABS.REPORTS]: ReportsTab,
   [TABS.SEARCH]: SearchTab,
 };
 

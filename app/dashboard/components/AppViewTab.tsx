@@ -74,18 +74,18 @@ const AppViewTab = () => {
   return (
     <div className="w-full flex flex-col">
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild className="w-full">
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
             className="w-full justify-between"
           >
-            {value ? value.app : "Select app..."}
+            {value ? value.app : "Search app..."}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className=" p-0">
+        <PopoverContent className="p-0 flex w-full">
           <Command onChange={debouncedChange} className="w-full">
             <CommandInput placeholder="Search app..." className="h-9" />
             {loading ? (
@@ -110,7 +110,7 @@ const AppViewTab = () => {
           </Command>
         </PopoverContent>
       </Popover>
-      <p className="font-medium text-xs pt-2 text-gray-700">
+      <p className="font-medium text-xs pt-2 text-gray-400">
         Try Full name - "Facebook"
       </p>
       {!_isEmpty(value) && (

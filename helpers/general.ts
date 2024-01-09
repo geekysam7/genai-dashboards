@@ -1,3 +1,5 @@
+import _isNil from "lodash/isNil";
+
 const getFormattedValue = (
   value: number,
   divider: number,
@@ -32,4 +34,19 @@ const parseInstallSize = (value: string) => {
   return dataFormatter(updatedValue, false);
 };
 
-export { dataFormatter, parseInstallSize, tickFormatter, formatInstallValue };
+const getIsValidQuery = (query: string) => {
+  const parsedQuery = JSON.parse(query.replaceAll("`", "").trim());
+  const isValid = !_isNil(parsedQuery?.query);
+  return {
+    isValid,
+    query: parsedQuery,
+  };
+};
+
+export {
+  dataFormatter,
+  parseInstallSize,
+  tickFormatter,
+  formatInstallValue,
+  getIsValidQuery,
+};

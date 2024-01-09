@@ -1,21 +1,28 @@
 "use server";
 
-import OpenAI from "openai";
-import { Client } from "@elastic/elasticsearch";
+import { Client as ElasticClient } from "@elastic/elasticsearch";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
 import { IDasbhboard } from "@/types/app";
+import { getIsValidQuery } from "@/helpers/general";
 
-const openai = new OpenAI({
-  apiKey: "sk-3EpwvEK", // fake
-  dangerouslyAllowBrowser: true, // can be handled on server side where we'll not be exposing api key
-});
+// init generativeAI instance.
 
-const client = new Client({
-  node: "https://545d8b1061514f2ebc6b554b74eef7b9.us-central1.gcp.cloud.es.io:443",
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_PRO_KEY as string);
+
+const geminiProModel = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+// init elastic instance
+const elasticCLient = new ElasticClient({
+  node: process.env.ELASTIC_CONNECT_URL,
   auth: {
-    apiKey: "TTUtNjRZd0Jxam91REZCMExrUnU6VHFFendtSE5UNWFDNklzV1hTbGlBUQ==", // Free tier
+    apiKey: process.env.ELASTIC_API_KEY as string, // Free tier
   },
 });
 
+const ELASTIC_INDEX = "search-category";
+
+// sanitization steps can be added for user query.
 const generatePrompt = (userQuery: string) => {
   return `
     consider my types are defined as:
@@ -46,58 +53,47 @@ const generatePrompt = (userQuery: string) => {
       };
     } 
     based on this types, we've indexed the data in elasticsearch. 
-    Now please resolve the following query with only code and no other extra text for an elasticsearch search query payload:
+    Now please resolve the following query with only code in single top level object containing only query payload inside 
+    and no other extra text 
+    and no info on code block type 
+    for an elasticsearch search query payload:
     "${userQuery}"
   `;
 };
 
-const fetchQuery = async (userQuery: string) => {
+const fetchQuery = async (
+  userQuery: string
+): Promise<{ response?: object; error?: string }> => {
   const prompt = generatePrompt(userQuery);
   try {
-    let query = {
-      query: {
-        range: {
-          reviews: {
-            gt: 100000,
-          },
-        },
-      },
-      size: 0,
-    };
-    // it will fail, so putting in try catch
+    // due to deployment region issues it can fail
     // hitting api for data flow.
+    let elasticQuery: string;
     try {
-      const completion = await openai.chat.completions.create({
-        messages: [{ role: "system", content: prompt }],
-        model: "gpt-3.5-turbo",
-      });
-      const content = completion.choices[0].message.content;
-      if (content === null) return;
-      query = JSON.parse(content);
+      const result = await geminiProModel.generateContent(prompt);
+      elasticQuery = result.response.text();
     } catch (error) {
       console.log(error);
+      throw error;
     }
-    const searchResult = await client.search({
-      index: "search-category",
-      query: {
-        range: {
-          reviews: {
-            gt: 100000,
-          },
-        },
-      },
+    console.log(elasticQuery);
+    const { isValid, query } = getIsValidQuery(elasticQuery);
+    if (!isValid) throw Error("Could not execute query");
+    const searchResult = await elasticCLient.search({
+      index: ELASTIC_INDEX,
+      ...query,
       size: 0,
     });
-    return searchResult;
-  } catch (error) {
-    return {};
+    return { response: searchResult };
+  } catch (error: any) {
+    return { error: error?.message || "Failed to execute query", response: {} };
   }
 };
 
 const search = async (searchString: string) => {
   try {
-    const searchResult = await client.search({
-      index: "search-category",
+    const searchResult = await elasticCLient.search({
+      index: ELASTIC_INDEX,
       ...(searchString
         ? {
             query: {

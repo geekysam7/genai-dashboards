@@ -18,9 +18,7 @@ type TAppInfo = {
   genres: string[];
   lastUpdated: string;
   currentVersion: string;
-  // values can be: varies with device and 4.0.3 and up, etc. keeping string for now, to aggregate it can be breaken up
   androidVersion: string;
-  // can be converted to string
   contentRating: {
     category: "EVERYONE" | "MATURE" | "TEEN" | "ADULTS" | "UNRATED";
     lowerLimit: number | TFallback;
