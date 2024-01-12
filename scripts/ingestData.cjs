@@ -4,12 +4,6 @@ const fs = require("fs");
 
 dotenv.config();
 
-const INSTANCE_DATA = {
-  CloudID:
-    "9c241a81aa4442f38ac0401a9483b705:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvJDU0NWQ4YjEwNjE1MTRmMmViYzZiNTU0Yjc0ZWVmN2I5JDZjZjYzY2ZlYWRmMDRiM2Y5NjJjYzE1MmQ0MWVlOWM4",
-  Url: "https://545d8b1061514f2ebc6b554b74eef7b9.us-central1.gcp.cloud.es.io:443",
-};
-
 const INDEXING_KEY = {
   APP: "app",
   CATEGORY: "category",
@@ -27,9 +21,9 @@ const INDEXING_KEY = {
 };
 
 const client = new Client({
-  node: "https://545d8b1061514f2ebc6b554b74eef7b9.us-central1.gcp.cloud.es.io:443",
+  node: process.env.ELASTIC_CONNECT_URL,
   auth: {
-    apiKey: "TTUtNjRZd0Jxam91REZCMExrUnU6VHFFendtSE5UNWFDNklzV1hTbGlBUQ==", // Free tier
+    apiKey: process.env.ELASTIC_API_KEY, // Free tier
   },
 });
 
