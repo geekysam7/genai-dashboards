@@ -24,8 +24,8 @@ If you want you can also setup env variables and read from there.
 
 Also you need three api keys:
 
-- ELASTIC_API_KEY => Your elastic instance api key
-- ELASTIC_CONNECT_URL => Connection url (make sure appropriate permissions are given)
-- GEMINI_PRO_KEY => Get it from gemini pro site.
+- `ELASTIC_API_KEY` => Your elastic instance api key
+- `ELASTIC_CONNECT_URL` => Connection url (make sure appropriate permissions are given)
+- `GEMINI_PRO_KEY` => Get it from gemini pro site.
 
 I'm indexing data at `search-category` index, if you have indexed at different place, update it's consumption.
