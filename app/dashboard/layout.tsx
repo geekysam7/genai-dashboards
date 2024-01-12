@@ -9,8 +9,8 @@ import DashboardWrapper from "./components/DashboardWrapper";
 const dev = process.env.NODE_ENV !== "production";
 
 export const server = dev
-  ? "http://localhost:3001"
-  : "https://segwise-assignment-sameer.vercel.app";
+  ? "http://localhost:3002"
+  : "https://geekysam7-dashboards.vercel.app";
 
 const getAppData = async (path: string) => {
   try {
